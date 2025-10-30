@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Calories Brûlées</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculateur de Calories Brûlées</h1>
+        <p class="description">Entrez vos données pour calculer les calories brûlées pendant l'exercice</p>
+        
+        <form id="caloriesForm">
+            <div class="form-group">
+                <label for="gender">Genre :</label>
+                <select id="gender" required>
+                    <option value="">Sélectionnez...</option>
+                    <option value="1">Homme</option>
+                    <option value="0">Femme</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Âge (années) :</label>
+                <input type="number" id="age" min="1" max="120" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="height">Taille (cm) :</label>
+                <input type="number" id="height" min="50" max="250" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="weight">Poids (kg) :</label>
+                <input type="number" id="weight" min="20" max="300" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="duration">Durée (minutes) :</label>
+                <input type="number" id="duration" min="1" max="600" step="0.1" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="heartRate">Fréquence cardiaque (bpm) :</label>
+                <input type="number" id="heartRate" min="40" max="220" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="bodyTemp">Température corporelle (°C) :</label>
+                <input type="number" id="bodyTemp" min="35" max="42" step="0.1" required>
+            </div>
+            
+            <button type="submit">Calculer les calories</button>
+        </form>
+        
+        <div id="result" class="result hidden">
+            <h2>Résultat</h2>
+            <p>Calories brûlées : <span id="caloriesValue"></span></p>
+            <div class="formula">
+                <h3>Formule utilisée :</h3>
+                <p>Calories = 467.38 + (1.56 × Genre) + (0.50 × Âge) + (-0.18 × Taille) + (0.31 × Poids) + (6.65 × Durée) + (2.00 × Fréquence cardiaque) + (-17.13 × Température corporelle)</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('caloriesForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Récupération des valeurs
+            const gender = parseFloat(document.getElementById('gender').value);
+            const age = parseFloat(document.getElementById('age').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const duration = parseFloat(document.getElementById('duration').value);
+            const heartRate = parseFloat(document.getElementById('heartRate').value);
+            const bodyTemp = parseFloat(document.getElementById('bodyTemp').value);
+            
+            // Calcul des calories selon la formule
+            const calories = 467.38 
+                + (1.56 * gender)
+                + (0.50 * age)
+                + (-0.18 * height)
+                + (0.31 * weight)
+                + (6.65 * duration)
+                + (2.00 * heartRate)
+                + (-17.13 * bodyTemp);
+            
+            // Affichage du résultat
+            document.getElementById('caloriesValue').textContent = calories.toFixed(2) + ' calories';
+            document.getElementById('result').classList.remove('hidden');
+            
+            // Scroll vers le résultat
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
